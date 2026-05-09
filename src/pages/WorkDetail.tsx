@@ -1,6 +1,7 @@
 import { useEffect, useMemo } from 'react'
 import { useParams, Link, useNavigate } from 'react-router'
 import { galleryConfig, workDetailConfig } from '../config'
+import { asset } from '../lib/asset'
 
 export default function WorkDetail() {
   const { id } = useParams()
@@ -115,7 +116,7 @@ export default function WorkDetail() {
       >
         {work.image && (
           <img
-            src={work.image}
+            src={asset(work.image)}
             alt={work.title}
             style={{
               width: '100%',

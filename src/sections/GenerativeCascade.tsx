@@ -4,6 +4,7 @@ import * as THREE from 'three'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { galleryConfig, type WorkItem } from '../config'
+import { asset } from '../lib/asset'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -370,7 +371,7 @@ function CascadeCard({ card }: { card: WorkItem }) {
       >
         {card.image && (
           <img
-            src={card.image}
+            src={asset(card.image)}
             alt={card.title}
             loading="lazy"
             decoding="async"

@@ -1,5 +1,6 @@
 import { useEffect, useRef } from 'react'
 import { heroConfig } from '../config'
+import { asset } from '../lib/asset'
 
 const MAX_SHIFT = 14
 
@@ -69,7 +70,7 @@ export default function FluidSubconscious() {
         style={{
           position: 'absolute',
           inset: 0,
-          backgroundImage: `url(${heroConfig.fluidImagePath})`,
+          backgroundImage: `url(${asset(heroConfig.fluidImagePath)})`,
           backgroundSize: 'cover',
           backgroundPosition: 'center',
           backgroundRepeat: 'no-repeat',
