@@ -64,7 +64,8 @@ export default function HeroOverlay() {
         position: 'relative',
         zIndex: 1,
         width: '100%',
-        height: '100vh',
+        minHeight: '100vh',
+        height: '100dvh',
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
@@ -95,9 +96,9 @@ export default function HeroOverlay() {
       {subtitleSource && (
         <div
           style={{
-            marginTop: '32px',
+            marginTop: 'clamp(20px, 4vh, 32px)',
             maxWidth: '820px',
-            minHeight: '160px',
+            minHeight: 'clamp(120px, 22vh, 160px)',
             textAlign: 'center',
           }}
         >
@@ -138,7 +139,7 @@ export default function HeroOverlay() {
       {heroConfig.ctaLabel && (
         <div
           style={{
-            marginTop: '120px',
+            marginTop: 'clamp(40px, 10vh, 120px)',
             opacity: showButton ? 1 : 0,
             transform: showButton ? 'translateY(0)' : 'translateY(20px)',
             transition: 'opacity 0.8s ease, transform 0.8s ease',
@@ -148,7 +149,8 @@ export default function HeroOverlay() {
             onClick={handleScroll}
             className="liquid-glass-strong"
             style={{
-              padding: '14px 40px',
+              padding: 'clamp(14px, 3vw, 16px) clamp(28px, 8vw, 40px)',
+              minHeight: '48px',
               fontSize: '0.9rem',
               fontWeight: 400,
               color: '#ffffff',

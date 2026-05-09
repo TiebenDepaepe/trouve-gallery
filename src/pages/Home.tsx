@@ -33,12 +33,13 @@ export default function Home() {
             }}
           >
             <div
+              className="footer-row"
               style={{
                 display: 'flex',
                 flexWrap: 'wrap',
                 justifyContent: 'space-between',
                 alignItems: 'flex-start',
-                gap: '48px',
+                gap: 'clamp(32px, 5vw, 48px)',
                 maxWidth: '1400px',
                 margin: '0 auto',
               }}
@@ -98,19 +99,28 @@ export default function Home() {
                           {footerConfig.navigationHeading}
                         </div>
                       )}
-                      <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+                      <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
                         {footerConfig.navigationLinks.map((link) => (
-                          <span
+                          <a
                             key={link.label}
+                            href={link.href || '#'}
                             style={{
                               fontSize: '0.85rem',
                               color: 'rgba(255,255,255,0.55)',
                               letterSpacing: '0.06em',
                               fontWeight: 300,
+                              textDecoration: 'none',
+                              padding: '10px 0',
+                              minHeight: '44px',
+                              display: 'flex',
+                              alignItems: 'center',
+                              transition: 'color 0.2s',
                             }}
+                            onMouseEnter={(e) => (e.currentTarget.style.color = 'rgba(255,255,255,0.9)')}
+                            onMouseLeave={(e) => (e.currentTarget.style.color = 'rgba(255,255,255,0.55)')}
                           >
                             {link.label}
-                          </span>
+                          </a>
                         ))}
                       </div>
                     </div>
@@ -131,19 +141,28 @@ export default function Home() {
                           {footerConfig.contactHeading}
                         </div>
                       )}
-                      <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+                      <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
                         {footerConfig.contactLinks.map((link) => (
-                          <span
+                          <a
                             key={link.label}
+                            href={link.href || '#'}
                             className="font-mono-data"
                             style={{
                               fontSize: '0.75rem',
                               color: 'rgba(255,255,255,0.45)',
                               letterSpacing: '0.06em',
+                              textDecoration: 'none',
+                              padding: '10px 0',
+                              minHeight: '44px',
+                              display: 'flex',
+                              alignItems: 'center',
+                              transition: 'color 0.2s',
                             }}
+                            onMouseEnter={(e) => (e.currentTarget.style.color = 'rgba(255,255,255,0.85)')}
+                            onMouseLeave={(e) => (e.currentTarget.style.color = 'rgba(255,255,255,0.45)')}
                           >
                             {link.label}
-                          </span>
+                          </a>
                         ))}
                       </div>
                     </div>
@@ -193,6 +212,14 @@ export default function Home() {
                 )}
               </div>
             )}
+            <style>{`
+              @media (max-width: 640px) {
+                .footer-row {
+                  flex-direction: column !important;
+                  align-items: flex-start !important;
+                }
+              }
+            `}</style>
           </footer>
         )}
       </main>

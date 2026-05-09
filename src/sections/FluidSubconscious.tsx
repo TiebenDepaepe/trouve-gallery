@@ -67,6 +67,7 @@ export default function FluidSubconscious() {
     >
       <div
         ref={imageRef}
+        className="fluid-bg"
         style={{
           position: 'absolute',
           inset: 0,
@@ -78,6 +79,13 @@ export default function FluidSubconscious() {
           willChange: 'transform',
         }}
       />
+      <style>{`
+        @media (max-width: 768px), (hover: none) {
+          .fluid-bg {
+            transform: scale(1.0) !important;
+          }
+        }
+      `}</style>
     </div>
   )
 }

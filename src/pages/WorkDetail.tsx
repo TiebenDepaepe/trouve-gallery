@@ -51,22 +51,24 @@ export default function WorkDetail() {
 
   return (
     <div
+      className="work-detail-root"
       style={{
         minHeight: '100vh',
         background: '#0a0a0a',
         color: '#e8e6e0',
         fontFamily: '"Inter", sans-serif',
-        padding: '32px clamp(16px, 5vw, 64px) 80px',
+        padding: 'clamp(20px, 5vw, 32px) clamp(16px, 5vw, 64px) clamp(48px, 10vw, 80px)',
         boxSizing: 'border-box',
       }}
     >
       {/* Top bar */}
       <div
+        className="work-detail-topbar"
         style={{
           display: 'flex',
           justifyContent: 'space-between',
           alignItems: 'center',
-          marginBottom: '48px',
+          marginBottom: 'clamp(28px, 6vw, 48px)',
           fontFamily: '"Geist Mono", monospace',
           fontSize: '0.75rem',
           letterSpacing: '0.15em',
@@ -80,7 +82,8 @@ export default function WorkDetail() {
               border: 'none',
               color: '#e8e6e0',
               cursor: 'pointer',
-              padding: 0,
+              padding: '12px 0',
+              minHeight: '44px',
               fontFamily: 'inherit',
               fontSize: 'inherit',
               letterSpacing: 'inherit',
@@ -104,12 +107,12 @@ export default function WorkDetail() {
 
       {/* Upper half — image */}
       <div
+        className="work-detail-image-wrap"
         style={{
           width: '100%',
           maxWidth: '1100px',
-          margin: '0 auto',
+          margin: '0 auto clamp(28px, 6vw, 48px)',
           aspectRatio: '3 / 2',
-          marginBottom: '48px',
           background: 'rgba(255,255,255,0.04)',
           overflow: 'hidden',
         }}
@@ -118,6 +121,8 @@ export default function WorkDetail() {
           <img
             src={asset(work.image)}
             alt={work.title}
+            loading="eager"
+            decoding="async"
             style={{
               width: '100%',
               height: '100%',
@@ -166,6 +171,7 @@ export default function WorkDetail() {
 
         {(work.artist || work.location || work.medium) && (
           <dl
+            className="work-detail-meta"
             style={{
               display: 'grid',
               gridTemplateColumns: '120px 1fr',
@@ -205,13 +211,13 @@ export default function WorkDetail() {
         {work.article && (
           <div
             style={{
-              fontSize: '1.08rem',
+              fontSize: 'clamp(0.95rem, 2.5vw, 1.08rem)',
               lineHeight: 1.75,
               color: 'rgba(232,230,224,0.85)',
             }}
           >
             {work.article.split('\n\n').map((para, i) => (
-              <p key={i} style={{ margin: '0 0 22px 0' }}>
+              <p key={i} style={{ margin: '0 0 clamp(16px, 4vw, 22px) 0' }}>
                 {para}
               </p>
             ))}
@@ -221,12 +227,14 @@ export default function WorkDetail() {
         {(workDetailConfig.backToGalleryLabel || workDetailConfig.footerNote) && (
           <div
             style={{
-              marginTop: '64px',
-              paddingTop: '32px',
+              marginTop: 'clamp(40px, 8vw, 64px)',
+              paddingTop: 'clamp(20px, 5vw, 32px)',
               borderTop: '1px solid rgba(255,255,255,0.12)',
               display: 'flex',
               justifyContent: 'space-between',
               alignItems: 'center',
+              gap: '16px',
+              flexWrap: 'wrap',
               fontFamily: '"Geist Mono", monospace',
               fontSize: '0.7rem',
               letterSpacing: '0.18em',
@@ -241,6 +249,10 @@ export default function WorkDetail() {
                   textDecoration: 'none',
                   opacity: 0.7,
                   transition: 'opacity 0.2s',
+                  padding: '12px 0',
+                  minHeight: '44px',
+                  display: 'inline-flex',
+                  alignItems: 'center',
                 }}
                 onMouseEnter={(e) => (e.currentTarget.style.opacity = '1')}
                 onMouseLeave={(e) => (e.currentTarget.style.opacity = '0.7')}
@@ -256,6 +268,24 @@ export default function WorkDetail() {
           </div>
         )}
       </div>
+
+      <style>{`
+        @media (max-width: 640px) {
+          .work-detail-image-wrap {
+            aspect-ratio: 4 / 3 !important;
+          }
+          .work-detail-meta {
+            grid-template-columns: 1fr !important;
+            row-gap: 4px !important;
+          }
+          .work-detail-meta dt {
+            margin-top: 12px !important;
+          }
+          .work-detail-meta dt:first-child {
+            margin-top: 0 !important;
+          }
+        }
+      `}</style>
     </div>
   )
 }

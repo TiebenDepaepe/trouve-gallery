@@ -44,8 +44,8 @@ export default function DeepSpaceFold() {
       style={{
         position: 'relative',
         width: '100%',
-        height: '100vh',
-        minHeight: '600px',
+        height: '100dvh',
+        minHeight: '500px',
         overflow: 'hidden',
         background: '#000000',
         zIndex: 2,
@@ -148,8 +148,8 @@ export default function DeepSpaceFold() {
           className="font-mono-data"
           style={{
             position: 'absolute',
-            bottom: '24px',
-            right: '32px',
+            bottom: 'clamp(16px, 3vh, 24px)',
+            right: 'clamp(16px, 4vw, 32px)',
             zIndex: 2,
             fontSize: '0.65rem',
             color: 'rgba(255,255,255,0.25)',

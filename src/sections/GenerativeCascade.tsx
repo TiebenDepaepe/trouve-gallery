@@ -28,6 +28,11 @@ export default function GenerativeCascade() {
   useEffect(() => {
     const canvas = canvasRef.current
     if (!canvas || !hasWorks) return
+
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    const isMobile = window.innerWidth < 768
+    if (reducedMotion) return
+
     let disposed = false
     let animFrameId = 0
 
@@ -37,13 +42,13 @@ export default function GenerativeCascade() {
     const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000)
     camera.position.z = 5
 
-    const renderer = new THREE.WebGLRenderer({ canvas, antialias: true })
+    const renderer = new THREE.WebGLRenderer({ canvas, antialias: !isMobile })
     renderer.setSize(window.innerWidth, window.innerHeight)
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
+    renderer.setPixelRatio(isMobile ? 1 : Math.min(window.devicePixelRatio, 2))
 
     const geometry = new THREE.PlaneGeometry(0.6, 0.8)
     const material = new THREE.MeshBasicMaterial({ color: 0x1c4a96, side: THREE.DoubleSide, wireframe: true })
-    const count = 400
+    const count = isMobile ? 120 : 400
     const mesh = new THREE.InstancedMesh(geometry, material, count)
 
     const dummy = new THREE.Object3D()
@@ -113,6 +118,10 @@ export default function GenerativeCascade() {
   useEffect(() => {
     const section = sectionRef.current
     if (!section || !hasWorks) return
+
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    const isMobile = window.innerWidth < 768
+    if (reducedMotion || isMobile) return
 
     const trackConfigs = [
       { selector: '#track-1', yPercent: -4, scrub: 1 },
@@ -186,6 +195,7 @@ export default function GenerativeCascade() {
         }}
       >
         <div
+          className="cascade-sidebar"
           style={{
             width: 'clamp(160px, 18vw, 260px)',
             flexShrink: 0,
@@ -275,7 +285,7 @@ export default function GenerativeCascade() {
             gap: 0,
             padding: '80px 0',
           }}
-          className="cascade-grid"
+          className="cascade-grid-desktop"
         >
           {columns.map((col, colIdx) => (
             <div
@@ -292,15 +302,52 @@ export default function GenerativeCascade() {
             </div>
           ))}
         </div>
+
+        <div
+          className="cascade-grid-mobile"
+          style={{
+            flex: 1,
+            display: 'none',
+            gridTemplateColumns: 'repeat(2, 1fr)',
+            gap: 0,
+            padding: '40px 0',
+          }}
+        >
+          {works.map((card) => (
+            <CascadeCard key={card.id} card={card} />
+          ))}
+        </div>
       </div>
 
       <style>{`
-        @media (max-width: 768px) {
-          .cascade-grid {
-            grid-template-columns: repeat(2, 1fr) !important;
+        @media (max-width: 1024px) {
+          .cascade-sidebar {
+            display: none !important;
           }
-          #track-3, #track-4 {
-            display: none;
+          .cascade-grid-desktop {
+            display: none !important;
+          }
+          .cascade-grid-mobile {
+            display: grid !important;
+          }
+        }
+        @media (max-width: 768px) {
+          .cascade-card-image {
+            height: 120px !important;
+          }
+          .cascade-card {
+            padding: 16px 12px !important;
+          }
+          .cascade-card-title {
+            font-size: 0.9rem !important;
+          }
+        }
+        @media (max-width: 480px) {
+          .cascade-grid-mobile {
+            grid-template-columns: 1fr !important;
+          }
+          .cascade-card-image {
+            height: 200px !important;
           }
         }
       `}</style>
@@ -312,6 +359,7 @@ function CascadeCard({ card }: { card: WorkItem }) {
   return (
     <Link
       to={`/work/${card.id.toLowerCase()}`}
+      className="cascade-card"
       style={{
         display: 'block',
         border: '1px solid #000',
@@ -346,6 +394,7 @@ function CascadeCard({ card }: { card: WorkItem }) {
         {card.id} // {card.type}
       </div>
       <div
+        className="cascade-card-title"
         style={{
           fontSize: '1rem',
           fontWeight: 900,
@@ -357,6 +406,7 @@ function CascadeCard({ card }: { card: WorkItem }) {
         {card.title}
       </div>
       <div
+        className="cascade-card-image"
         style={{
           width: '100%',
           height: '160px',
